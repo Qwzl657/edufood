@@ -1,6 +1,7 @@
 package com.edufood.edufood.service;
 
 import com.edufood.edufood.entity.Dish;
+import com.edufood.edufood.repository.DishRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

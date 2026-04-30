@@ -4,6 +4,7 @@ import com.edufood.edufood.entity.Dish;
 import com.edufood.edufood.entity.Order;
 import com.edufood.edufood.entity.OrderItem;
 import com.edufood.edufood.entity.User;
+import com.edufood.edufood.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

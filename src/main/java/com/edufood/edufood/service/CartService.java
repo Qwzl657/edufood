@@ -9,13 +9,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
 @Service
 @Slf4j
 public class CartService {
 
     private static final String COOKIE_NAME = "cart";
-
 
     public Map<Long, Integer> getCart(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
@@ -31,6 +29,7 @@ public class CartService {
     public Cookie addToCart(HttpServletRequest request, Long dishId, int quantity) {
         Map<Long, Integer> cart = getCart(request);
         cart.merge(dishId, quantity, Integer::sum);
+        log.debug("Корзина после добавления: {}", cart);
         log.debug("Добавлено в корзину: dishId={}, qty={}", dishId, quantity);
         return buildCookie(cart);
     }
@@ -57,7 +56,8 @@ public class CartService {
     private Map<Long, Integer> parseCart(String value) {
         Map<Long, Integer> cart = new LinkedHashMap<>();
         if (value == null || value.isBlank()) return cart;
-        for (String entry : value.split(",")) {
+
+        for (String entry : value.split("\\|")) {
             String[] parts = entry.split(":");
             if (parts.length == 2) {
                 try {
@@ -73,9 +73,10 @@ public class CartService {
     private Cookie buildCookie(Map<Long, Integer> cart) {
         String value = cart.entrySet().stream()
                 .map(e -> e.getKey() + ":" + e.getValue())
-                .collect(Collectors.joining(","));
+                .collect(Collectors.joining("|"));
+
         Cookie cookie = new Cookie(COOKIE_NAME, value);
-        cookie.setMaxAge(7 * 24 * 60 * 60); // 7 дней
+        cookie.setMaxAge(7 * 24 * 60 * 60);
         cookie.setPath("/");
         return cookie;
     }

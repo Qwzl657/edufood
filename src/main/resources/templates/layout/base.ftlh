@@ -30,7 +30,9 @@
                     <span class="text-light">
                     <i class="bi bi-person-circle"></i> ${username}
                 </span>
-                    <a href="/profile" class="btn btn-outline-light btn-sm">Профиль</a>
+                    <a href="/profile" class="btn btn-outline-light btn-sm">
+                        <i class="bi bi-clock-history"></i> История заказов
+                    </a>
                     <form method="post" action="/logout" class="d-inline">
                         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                         <button class="btn btn-outline-danger btn-sm">Выйти</button>

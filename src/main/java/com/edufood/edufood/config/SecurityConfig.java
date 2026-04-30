@@ -26,8 +26,13 @@ public class SecurityConfig {
         log.info("Настройка SecurityFilterChain");
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/cafes", "/cafes/**", "/register", "/login",
-                                "/cart/**", "/css/**", "/js/**", "/img/**").permitAll()
+                        .requestMatchers(
+                                "/", "/cafes", "/cafes/**",
+                                "/register", "/login",
+                                "/cart/**",
+                                "/css/**", "/js/**", "/img/**",
+                                "/h2-console/**"
+                        ).permitAll()
                         .requestMatchers("/orders/**", "/profile").authenticated()
                         .anyRequest().authenticated()
                 )
@@ -41,7 +46,12 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/cafes")
                         .permitAll()
                 )
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/cart/**"));
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/cart/**", "/h2-console/**")
+                )
+                .headers(headers -> headers
+                        .frameOptions(frame -> frame.disable())
+                );
 
         return http.build();
     }

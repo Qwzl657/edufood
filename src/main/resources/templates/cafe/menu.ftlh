@@ -18,9 +18,12 @@
                             <small class="text-muted">${dish.description!""}</small>
                             <div class="fw-bold text-success mt-1">${dish.price} ₽</div>
                         </div>
-                        <form method="post" action="/cart/add/${dish.id}">
+                        <form method="post" action="/cart/add/${dish.id}"
+                              class="d-flex align-items-center gap-2">
                             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                             <input type="hidden" name="redirect" value="/cafes/${cafe.id}"/>
+                            <input type="number" name="quantity" value="1" min="1" max="99"
+                                   class="form-control form-control-sm" style="width: 65px;"/>
                             <button class="btn btn-success btn-sm">
                                 <i class="bi bi-plus-lg"></i> В корзину
                             </button>

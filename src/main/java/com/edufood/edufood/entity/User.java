@@ -2,8 +2,7 @@ package com.edufood.edufood.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.Id;
-
+import jakarta.persistence.Id;
 @Entity
 @Table(name = "users")
 @Getter

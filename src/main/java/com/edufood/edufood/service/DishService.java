@@ -20,11 +20,18 @@ public class DishService {
 
     public Page<Dish> getDishesByCafe(Long cafeId, int page) {
         Pageable pageable = PageRequest.of(page, 10);
-        return dishRepository.findByCafeId(cafeId, pageable);
+        return dishRepository.findByCafeIdWithCafe(cafeId, pageable);
     }
 
     public Dish getById(Long id) {
         return dishRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Блюдо не найдено: " + id));
+                .orElseThrow(() -> {
+                    log.error("Блюдо не найдено: {}", id);
+                    return new RuntimeException("Блюдо не найдено: " + id);
+                });
+    }
+
+    public List<Dish> getByIds(List<Long> ids) {
+        return dishRepository.findAllWithCafeByIds(ids);
     }
 }

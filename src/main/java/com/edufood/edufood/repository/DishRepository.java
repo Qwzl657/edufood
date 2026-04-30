@@ -9,5 +9,10 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface DishRepository extends JpaRepository<Dish, Long> {
-    Page<Dish> findByCafeId(Long cafeId, Pageable pageable);
+
+    @Query("SELECT d FROM Dish d JOIN FETCH d.cafe WHERE d.cafe.id = :cafeId")
+    Page<Dish> findByCafeIdWithCafe(@Param("cafeId") Long cafeId, Pageable pageable);
+
+    @Query("SELECT d FROM Dish d JOIN FETCH d.cafe WHERE d.id IN :ids")
+    List<Dish> findAllWithCafeByIds(@Param("ids") List<Long> ids);
 }
